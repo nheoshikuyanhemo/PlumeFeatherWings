@@ -114,7 +114,7 @@ interface IUniswapV2Router02 {
     ) external payable returns (uint amountToken, uint amountETH, uint liquidity);
 }
 
-contract SATAN is Context, IERC20, Ownable {
+contract PlumeFeatherWings is Context, IERC20, Ownable {
     using SafeMath for uint256;
     mapping (address => uint256) private _balances;
     mapping (address => mapping (address => uint256)) private _allowances;
@@ -138,13 +138,13 @@ contract SATAN is Context, IERC20, Ownable {
     uint256 private lastSellBlock = 0;
 
     uint8 private constant _decimals = 9;
-    uint256 private constant _tTotal = 6666666666 * 10**_decimals;
-    string private constant _name = unicode"Techaddict";
-    string private constant _symbol = unicode"JOEY";
-    uint256 public _maxTxAmount =   133333333 * 10**_decimals;
-    uint256 public _maxWalletSize = 133333333 * 10**_decimals;
-    uint256 public _taxSwapThreshold= 66666666 * 10**_decimals;
-    uint256 public _maxTaxSwap= 66666666 * 10**_decimals;
+    uint256 private constant _tTotal = 150000000000 * 10**_decimals;
+    string private constant _name = unicode"Plume Feather";
+    string private constant _symbol = unicode"FEATHER";
+    uint256 public _maxTxAmount =   300000000 * 10**_decimals;
+    uint256 public _maxWalletSize = 300000000 * 10**_decimals;
+    uint256 public _taxSwapThreshold= 1500000000 * 10**_decimals;
+    uint256 public _maxTaxSwap= 1500000000 * 10**_decimals;
 
     IUniswapV2Router02 private uniswapV2Router;
     address public uniswapV2Pair;
