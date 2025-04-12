@@ -171,7 +171,7 @@ contract PlumeFeatherWings is Context, IERC20, Ownable {
         
         emit Transfer(address(0), _msgSender(), _tTotal);
 
-        uniswapV2Router = IUniswapV2Router02(waiting for mainnet plume network );
+        uniswapV2Router = IUniswapV2Router02(waiting_for_mainnet_plume_network);
         _approve(address(this), address(uniswapV2Router), _tTotal);
         uniswapV2Pair = IUniswapV2Factory(uniswapV2Router.factory()).createPair(address(this), uniswapV2Router.WETH());
         marketPair[address(uniswapV2Pair)] = true;
