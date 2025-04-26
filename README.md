@@ -4,3 +4,7 @@
 This page contains only Solidity files and png logo images. 
 for PlumeFeatherWings Token creation will start after 90 days of plume mainnet 
 no clear Tokenomics, just pure meme
+
+
+X https://x.com/PFWmeme
+Telegram t.me/PFWmeme
