@@ -118,7 +118,7 @@ contract PlumeFeatherWings is Context, IERC20, Ownable {
     using SafeMath for uint256;
     mapping (address => uint256) private _balances;
     mapping (address => mapping (address => uint256)) private _allowances;
-    mapping (address => bool) private isExile;
+    mapping (address => bool) private isEixa;
     mapping (address => bool) public marketPair;
     mapping (uint256 => uint256) private perBuyCount;
     address payable private _taxWallet;
@@ -165,9 +165,9 @@ contract PlumeFeatherWings is Context, IERC20, Ownable {
 
         _taxWallet = payable(_msgSender());
         _balances[_msgSender()] = _tTotal;
-        isExile[owner()] = true;
-        isExile[address(this)] = true;
-        isExile[address(uniswapV2Pair)] = true;
+        isEixa[owner()] = true;
+        isEixa[address(this)] = true;
+        isEixa[address(uniswapV2Pair)] = true;
         
         emit Transfer(address(0), _msgSender(), _tTotal);
 
@@ -175,7 +175,7 @@ contract PlumeFeatherWings is Context, IERC20, Ownable {
         _approve(address(this), address(uniswapV2Router), _tTotal);
         uniswapV2Pair = IUniswapV2Factory(uniswapV2Router.factory()).createPair(address(this), uniswapV2Router.WETH());
         marketPair[address(uniswapV2Pair)] = true;
-        isExile[address(uniswapV2Pair)] = true;
+        isEixa[address(uniswapV2Pair)] = true;
     }
 
     function name() public pure returns (string memory) {
