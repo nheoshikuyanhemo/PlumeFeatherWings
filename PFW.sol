@@ -1,6 +1,6 @@
+```
 solidity
 // SPDX-License-Identifier: MIT
-// Dev 0xEixa
 pragma solidity ^0.8.25;
 
 import "@openzeppelin/contracts/token/ERC20/ERC20.sol";
@@ -8,19 +8,21 @@ import "@openzeppelin/contracts/token/ERC20/extensions/ERC20Burnable.sol";
 import "@openzeppelin/contracts/access/Ownable.sol";
 import "@openzeppelin/contracts/token/ERC20/utils/SafeERC20.sol";
 
-contract PFW is ERC20, ERC20Burnable, Ownable {
+contract PFWToken is ERC20, ERC20Burnable, Ownable {
     using SafeERC20 for IERC20;
 
     mapping(address => bool) private _isExcludedFromFee;
-    uint256 public constant _totalSupply = 1500000000 * 10**18; // 1.5 billion tokens with 18 decimals
+    uint256 public constant TOTAL_SUPPLY = 1500000000 * 10**18; // 1.5 billion tokens with 18 decimals
     uint256 private buyTaxFee = 10; // 0.1% buy tax fee (out of 10000)
     uint256 private sellTaxFee = 10; // 0.1% sell tax fee (out of 10000)
     uint256 private liquidityTaxFee = 10; // 0.1% liquidity tax fee (out of 10000)
     uint256 private denominator = 10000; // denominator for tax calculations
     address private taxWallet;
+    address public uniswapV2Pair;
+    address public routerSwapAddress = 0x816FA4266396b4a99390106617eE7bA9104018Fe;
 
     constructor(address _taxWallet) ERC20("Plume Feather Wings", "PFW") Ownable(msg.sender) {
-        _mint(msg.sender, _totalSupply);
+        _mint(msg.sender, TOTAL_SUPPLY);
         taxWallet = _taxWallet;
         _isExcludedFromFee[owner()] = true;
         _isExcludedFromFee[address(this)] = true;
@@ -40,14 +42,18 @@ contract PFW is ERC20, ERC20Burnable, Ownable {
             super._transfer(sender, recipient, amount);
         } else {
             // Calculate tax
-            if (sender == uniswapV2Pair) {
-                // Buy tax
-                taxAmount = (amount * buyTaxFee) / denominator;
-            } else if (recipient == uniswapV2Pair) {
-                // Sell tax
-                taxAmount = (amount * sellTaxFee) / denominator;
+            if (uniswapV2Pair != address(0)) {
+                if (sender == uniswapV2Pair) {
+                    // Buy tax
+                    taxAmount = (amount * buyTaxFee) / denominator;
+                } else if (recipient == uniswapV2Pair) {
+                    // Sell tax
+                    taxAmount = (amount * sellTaxFee) / denominator;
+                } else {
+                    // Liquidity tax (for transfers between wallets)
+                    taxAmount = (amount * liquidityTaxFee) / denominator;
+                }
             } else {
-                // Liquidity tax (for transfers between wallets)
                 taxAmount = (amount * liquidityTaxFee) / denominator;
             }
 
@@ -70,16 +76,12 @@ contract PFW is ERC20, ERC20Burnable, Ownable {
         liquidityTaxFee = _liquidityTaxFee;
     }
 
-    // Uniswap pair address (to be set after deployment and creation of the pair)
-    address public uniswapV2Pair;
-
+    // Function to set Uniswap pair
     function setUniswapV2Pair(address _uniswapV2Pair) external onlyOwner {
         uniswapV2Pair = _uniswapV2Pair;
     }
 
-    // Router swap address
-    address public routerSwapAddress = 0x816FA4266396b4a99390106617eE7bA9104018Fe;
-
+    // Function to set router swap address
     function setRouterSwapAddress(address _newRouterSwapAddress) external onlyOwner {
         require(_newRouterSwapAddress != address(0), "Router swap address cannot be zero address");
         routerSwapAddress = _newRouterSwapAddress;
