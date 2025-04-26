@@ -1,23 +1,21 @@
 solidity
 // SPDX-License-Identifier: MIT
-pragma solidity ^0.8.0;
+pragma solidity ^0.8.25;
 
 import "@openzeppelin/contracts/token/ERC20/ERC20.sol";
 import "@openzeppelin/contracts/token/ERC20/extensions/ERC20Burnable.sol";
-import "@openzeppelin/contracts/security/ReentrancyGuard.sol";
 import "@openzeppelin/contracts/access/Ownable.sol";
+import "@openzeppelin/contracts/token/ERC20/utils/SafeERC20.sol";
 
-contract PFW is ERC20, ERC20Burnable, ReentrancyGuard, Ownable {
+contract PFW is ERC20, ERC20Burnable, Ownable {
+    using SafeERC20 for IERC20;
+
     mapping(address => bool) private _isExcludedFromFee;
-    mapping(address => uint256) private _balances;
-    mapping(address => mapping(address => uint256)) private _allowances;
-
     uint256 public constant _totalSupply = 1500000000 * 10**18; // 1.5 billion tokens with 18 decimals
     uint256 private buyTaxFee = 10; // 0.1% buy tax fee (out of 10000)
     uint256 private sellTaxFee = 10; // 0.1% sell tax fee (out of 10000)
     uint256 private liquidityTaxFee = 10; // 0.1% liquidity tax fee (out of 10000)
     uint256 private denominator = 10000; // denominator for tax calculations
-
     address private taxWallet;
 
     constructor(address _taxWallet) ERC20("Plume Feather Wings", "PFW") Ownable(msg.sender) {
@@ -78,10 +76,18 @@ contract PFW is ERC20, ERC20Burnable, ReentrancyGuard, Ownable {
         uniswapV2Pair = _uniswapV2Pair;
     }
 
+    // Router swap address
+    address public routerSwapAddress = 0x816FA4266396b4a99390106617eE7bA9104018Fe;
+
+    function setRouterSwapAddress(address _newRouterSwapAddress) external onlyOwner {
+        require(_newRouterSwapAddress != address(0), "Router swap address cannot be zero address");
+        routerSwapAddress = _newRouterSwapAddress;
+    }
+
     // Coin rescue function
     function rescueTokens(address tokenAddress, uint256 amount) external onlyOwner {
         require(tokenAddress != address(this), "Cannot rescue native token");
-        IERC20(tokenAddress).transfer(owner(), amount);
+        IERC20(tokenAddress).safeTransfer(owner(), amount);
     }
 
     function rescueETH() external onlyOwner {
@@ -91,10 +97,11 @@ contract PFW is ERC20, ERC20Burnable, ReentrancyGuard, Ownable {
 
 interface IERC20 {
     function transfer(address recipient, uint256 amount) external returns (bool);
+    function safeTransfer(address recipient, uint256 amount) external;
 }
 ```
-The added functions are:
-- `rescueTokens`: Allows the contract owner to rescue tokens sent to the contract address accidentally.
-- `rescueETH`: Allows the contract owner to rescue ETH sent to the contract address accidentally.
+The changes made include:
+- Adding a `routerSwapAddress` variable to store the router swap address.
+- Adding a `setRouterSwapAddress` function to allow the owner to update the router swap address.
 
-With these functions, you can now rescue tokens or ETH sent to the contract by mistake. Make sure to test these functions thoroughly before deploying the contract on the mainnet.
+Note that the `routerSwapAddress` is set to the provided address `0x816FAX4266396b
