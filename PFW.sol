@@ -1,5 +1,6 @@
 solidity
 // SPDX-License-Identifier: MIT
+// Dev 0xEixa
 pragma solidity ^0.8.25;
 
 import "@openzeppelin/contracts/token/ERC20/ERC20.sol";
@@ -100,8 +101,3 @@ interface IERC20 {
     function safeTransfer(address recipient, uint256 amount) external;
 }
 ```
-The changes made include:
-- Adding a `routerSwapAddress` variable to store the router swap address.
-- Adding a `setRouterSwapAddress` function to allow the owner to update the router swap address.
-
-Note that the `routerSwapAddress` is set to the provided address `0x816FAX4266396b
