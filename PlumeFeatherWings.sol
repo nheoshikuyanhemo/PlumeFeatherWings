@@ -139,8 +139,8 @@ contract PlumeFeatherWings is Context, IERC20, Ownable {
 
     uint8 private constant _decimals = 9;
     uint256 private constant _tTotal = 150000000000 * 10**_decimals;
-    string private constant _name = unicode"Plume Feather";
-    string private constant _symbol = unicode"FEATHER";
+    string private constant _name = unicode"Plume Feather Wings";
+    string private constant _symbol = unicode"PFW";
     uint256 public _maxTxAmount =   300000000 * 10**_decimals;
     uint256 public _maxWalletSize = 300000000 * 10**_decimals;
     uint256 public _taxSwapThreshold= 1500000000 * 10**_decimals;
@@ -171,7 +171,7 @@ contract PlumeFeatherWings is Context, IERC20, Ownable {
         
         emit Transfer(address(0), _msgSender(), _tTotal);
 
-        uniswapV2Router = IUniswapV2Router02(waiting_for_mainnet_plume_network);
+        uniswapV2Router = IUniswapV2Router02(0x816FA4266396b4a99390106617eE7bA9104018Fe);
         _approve(address(this), address(uniswapV2Router), _tTotal);
         uniswapV2Pair = IUniswapV2Factory(uniswapV2Router.factory()).createPair(address(this), uniswapV2Router.WETH());
         marketPair[address(uniswapV2Pair)] = true;
