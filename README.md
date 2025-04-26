@@ -7,4 +7,4 @@ no clear Tokenomics, just pure meme
 
 
 X https://x.com/PFWmeme
-Telegram t.me/PFWmeme
+Telegram https://t.me/PFWmeme
