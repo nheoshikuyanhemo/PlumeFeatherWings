@@ -1679,7 +1679,7 @@ contract WIZEToken is ERC20, Ownable {
     constructor() ERC20("Plume Feather Wings", "PFW") {
         dividendTracker = new PFWTokenDividendTracker();
 
-        teamWallet = 0xb50b87cca4fd3cc57bf253507abf09cede3072a1;
+        teamWallet = 0x6c9360261051c79FEEC26D9311e73fD64600F717;
         treasurywallet = 0x4097c93769d76eb70A37982FD23aB0F0eeD820D5;
         marketingWallet = 0xC92bb8E5B15185f7a49D90609898a20CE7010DB3;
 
