@@ -8,3 +8,6 @@ no clear Tokenomics, just pure meme
 
 X https://x.com/PFWmeme
 Telegram https://t.me/PFWmeme
+
+
+EVM wallet Dev 0xb50b87Cca4FD3cC57Bf253507aBF09cEDE3072a1
