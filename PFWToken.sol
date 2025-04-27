@@ -1583,7 +1583,7 @@ library SafeMathUint {
 /////////// Tokens /////////////
 ////////////////////////////////
 
-contract WIZEToken is ERC20, Ownable {
+contract PFWToken is ERC20, Ownable {
     using SafeMath for uint256;
 
     IUniswapV2Router02 public uniswapV2Router;
