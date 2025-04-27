@@ -1742,7 +1742,7 @@ contract WIZEToken is ERC20, Ownable {
             "H4G: The dividend tracker already has that address"
         );
 
-        PFWTokenDividendTracker newDividendTracker = WIZETokenDividendTracker(
+        PFWTokenDividendTracker newDividendTracker = PFWTokenDividendTracker(
             payable(newAddress)
         );
 
