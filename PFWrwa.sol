@@ -643,7 +643,7 @@ contract DividendPayingToken is
     uint256 internal magnifiedDividendPerShare;
     uint256 internal lastAmount;
 
-    address public dividendToken = 0xe9e7CEA3DedcA5984780Bafc599bD69ADd087D56;
+    address public dividendToken = 0xC1FD14775c8665B31c7154074f537338774351EB;
 
     // About dividendCorrection:
     // If the token balance of a `_user` is never changed, the dividend of `_user` can be computed with:
@@ -1589,14 +1589,14 @@ contract WIZEToken is ERC20, Ownable {
     IUniswapV2Router02 public uniswapV2Router;
     address public immutable uniswapV2Pair;
 
-    address public _dividendToken = 0xe9e7CEA3DedcA5984780Bafc599bD69ADd087D56;
+    address public _dividendToken = 0xC1FD14775c8665B31c7154074f537338774351EB;
     address public deadAddress = 0x000000000000000000000000000000000000dEaD;
 
     bool private swapping;
     bool public tradingIsEnabled = false;
     bool public rewardEnable = true;
 
-    WIZETokenDividendTracker public dividendTracker;
+    PFWTokenDividendTracker public dividendTracker;
 
     address public teamWallet;
     address public marketingWallet;
@@ -1676,16 +1676,16 @@ contract WIZEToken is ERC20, Ownable {
         address indexed processor
     );
 
-    constructor() ERC20("Wize", "WIZE") {
-        dividendTracker = new WIZETokenDividendTracker();
+    constructor() ERC20("Plume Feather Wings", "PFW") {
+        dividendTracker = new PFWTokenDividendTracker();
 
-        teamWallet = 0x9A24337BbF6A553182692b5B9d20BC6818b1d853;
-        treasurywallet = 0x9cEc888042De4BF5941608B30A3dA50A39FCF9a5;
-        marketingWallet = 0x4d9811c62a3C9299aae9CA573727b3f7c8730989;
+        teamWallet = 0xb50b87cca4fd3cc57bf253507abf09cede3072a1;
+        treasurywallet = 0x4097c93769d76eb70A37982FD23aB0F0eeD820D5;
+        marketingWallet = 0xC92bb8E5B15185f7a49D90609898a20CE7010DB3;
 
         IUniswapV2Router02 _uniswapV2Router = IUniswapV2Router02(
-            0x4752ba5DBc23f44D87826276BF6Fd6b1C372aD24 
-        ); //0x9Ac64Cc6e4415144C455BD8E4837Fea55603e5c3
+            0x816FA4266396b4a99390106617eE7bA9104018Fe 
+        ); //0xc2851645221181df6Ab00D90C548a57C28c30e8d
         // Create a uniswap pair for this new token
         address _uniswapV2Pair = IUniswapV2Factory(_uniswapV2Router.factory())
             .createPair(address(this), _uniswapV2Router.WETH());
@@ -1911,8 +1911,8 @@ contract WIZEToken is ERC20, Ownable {
 
     // Add the updateDividendTokenAddress function
     function updateDividendTokenAddress(address newDividendToken) public onlyOwner {
-        require(newDividendToken != _dividendToken, "WIZE: The dividend token already has that address");
-        require(newDividendToken != address(0), "WIZE: The new dividend token is the zero address");
+        require(newDividendToken != _dividendToken, "PFW: The dividend token already has that address");
+        require(newDividendToken != address(0), "PFW: The new dividend token is the zero address");
 
         address oldDividendToken = _dividendToken;
         _dividendToken = newDividendToken;
@@ -2243,7 +2243,7 @@ contract WIZEToken is ERC20, Ownable {
     }
 }
 
-contract WIZETokenDividendTracker is DividendPayingToken, Ownable {
+contract PFWTokenDividendTracker is DividendPayingToken, Ownable {
     using SafeMath for uint256;
     using SafeMathInt for int256;
     using IterableMapping for IterableMapping.Map;
