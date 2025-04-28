@@ -30,7 +30,7 @@ contract PFW is ERC20, ERC20Burnable, Pausable, Ownable {
     address private constant FEE_WALLET_MARKETING = 0x4097c93769d76eb70a37982fd23ab0f0eed820d5;
 
     // PLUME token address (update this with the correct address)
-    address private constant PLUME_TOKEN_ADDRESS = 0x...; // PLUME token address
+    address private constant PLUME_TOKEN_ADDRESS = 0xC1FD14775c8665B31c7154074f537338774351EB; // PLUME token address
 
     constructor() ERC20("Plume Feather Wings", "PFW") {
         _mint(msg.sender, TOTAL_SUPPLY);
