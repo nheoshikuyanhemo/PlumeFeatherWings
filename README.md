@@ -1,4 +1,4 @@
-# This is the PlumeFeatherWings smart contract erc20 meme Token with tax.
+# This is the PlumeFeatherWings smart contract erc20 meme Token (MappingEERC20).
 #### This contract is far from perfect and may still contain many errors.  
 
 This page contains only Solidity files and png logo images. 
